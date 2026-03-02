@@ -44,7 +44,7 @@ func TestPalindromePermutation(t *testing.T) {
 		{" a a d b b c ", false}}
 
 	for i, tc := range testCases {
-		fmt.Printf("Test %d: palindrome_permutation(\"%s\") = ", i+1, tc.input)
+		fmt.Printf("Test %d: PalindromePermutation(\"%s\") = ", i+1, tc.input)
 		result := PalindromePermutation(tc.input)
 		fmt.Printf("%t ", result)
 		if !result == tc.expected {

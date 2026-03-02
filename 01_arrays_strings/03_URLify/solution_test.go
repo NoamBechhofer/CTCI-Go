@@ -24,7 +24,7 @@ func TestURLify(t *testing.T) {
 	}
 
 	for i, tc := range testCases {
-		fmt.Printf("Test %d: urlify(%q, %d) = ",
+		fmt.Printf("Test %d: URLify(%q, %d) = ",
 			i+1,
 			tc.input,
 			tc.trueLength,

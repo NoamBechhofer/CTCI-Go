@@ -11,10 +11,6 @@ type TestCase struct {
 }
 
 func TestIsUnique(t *testing.T) {
-	// if !IsUnique(whatever) {
-	//  t.Fatal("Expected foo")
-	// }
-
 	testCases := [...]TestCase{
 		{"", true},
 		{"a", true},

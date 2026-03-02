@@ -29,7 +29,7 @@ func TestOneAway(t *testing.T) {
 
 	for i, tc := range testCases {
 		fmt.Printf(
-			"Test %d: one_away(\"%s\", \"%s\") = ", i+1, tc.str1, tc.str2)
+			"Test %d: OneAway(\"%s\", \"%s\") = ", i+1, tc.str1, tc.str2)
 		result := OneAway(tc.str1, tc.str2)
 		fmt.Printf("%t ", result)
 		if result != tc.expected {
