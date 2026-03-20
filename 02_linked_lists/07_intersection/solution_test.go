@@ -2,7 +2,6 @@ package intersection
 
 import (
 	"fmt"
-	"strconv"
 	"strings"
 	"testing"
 
@@ -15,10 +14,6 @@ type TestCase struct {
 	intersectionLen int
 }
 
-func intToString(num int32) string {
-	return strconv.FormatInt(int64(num), 10)
-}
-
 func (tc *TestCase) toString() string {
 	aUniqueVals := max(len(tc.aVals)-int(tc.intersectionLen), 0)
 	bUniqueVals := max(len(tc.bVals)-int(tc.intersectionLen), 0)
@@ -27,7 +22,7 @@ func (tc *TestCase) toString() string {
 	var bUniqueBuilder strings.Builder
 
 	for i := range aUniqueVals {
-		aUniqueBuilder.WriteString(intToString(tc.aVals[i]))
+		aUniqueBuilder.WriteString(lib.SignedToString(tc.aVals[i]))
 		if i != aUniqueVals-1 {
 			aUniqueBuilder.WriteString(" → ")
 		}
@@ -37,7 +32,7 @@ func (tc *TestCase) toString() string {
 	}
 
 	for i := range bUniqueVals {
-		bUniqueBuilder.WriteString(intToString(tc.bVals[i]))
+		bUniqueBuilder.WriteString(lib.SignedToString(tc.bVals[i]))
 		if i != bUniqueVals-1 {
 			bUniqueBuilder.WriteString(" → ")
 		}
@@ -56,7 +51,7 @@ func (tc *TestCase) toString() string {
 
 	var sharedBuilder strings.Builder
 	for i := aUniqueVals; i < len(tc.aVals); i++ {
-		sharedBuilder.WriteString(intToString(tc.aVals[i]))
+		sharedBuilder.WriteString(lib.SignedToString(tc.aVals[i]))
 		if i != len(tc.aVals)-1 {
 			sharedBuilder.WriteString(" → ")
 		}
@@ -132,7 +127,7 @@ func TestIntersection(t *testing.T) {
 
 			var gotVal string
 			if got != nil {
-				gotVal = intToString(got.Val)
+				gotVal = lib.SignedToString(got.Val)
 			} else {
 				gotVal = "nil"
 			}
@@ -140,7 +135,7 @@ func TestIntersection(t *testing.T) {
 			if got != expected {
 				var expectedVal string
 				if expected != nil {
-					expectedVal = intToString(expected.Val)
+					expectedVal = lib.SignedToString(expected.Val)
 				} else {
 					expectedVal = "nil"
 				}
