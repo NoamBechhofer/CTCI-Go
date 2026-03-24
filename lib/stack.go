@@ -50,3 +50,10 @@ func (stack *Stack[T]) Push(ele T) {
 
 	stack.slice = append(stack.slice, ele)
 }
+
+func (stack *Stack[T]) Size() int {
+	stack.mu.RLock()
+	defer stack.mu.RUnlock()
+
+	return len(stack.slice)
+}
