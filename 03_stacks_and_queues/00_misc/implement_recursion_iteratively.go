@@ -15,7 +15,7 @@ func FactorialIterative(n uint) uint {
 		beforeRecurse bool
 	}
 
-	var stack lib.Stack[Frame]
+	var stack lib.ArrayStack[Frame]
 
 	stack.Push(Frame{n: n, beforeRecurse: true})
 

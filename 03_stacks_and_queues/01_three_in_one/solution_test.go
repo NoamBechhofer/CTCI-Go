@@ -6,7 +6,22 @@ import (
 	"testing"
 
 	"github.com/NoamBechhofer/CTCI-Go/lib"
+	"github.com/NoamBechhofer/CTCI-Go/testutils"
 )
+
+func TestThreeInOne(t *testing.T) {
+	stacks := NewThreeInOne[int]()
+
+	t.Run("first stack", func(t *testing.T) {
+		testutils.StackFunctionality(t, stacks.FirstStack())
+	})
+	t.Run("second stack", func(t *testing.T) {
+		testutils.StackFunctionality(t, stacks.SecondStack())
+	})
+	t.Run("third stack", func(t *testing.T) {
+		testutils.StackFunctionality(t, stacks.ThirdStack())
+	})
+}
 
 type Operation int
 
@@ -19,7 +34,7 @@ const (
 )
 
 func fuzzTarget(t *testing.T, data []byte) {
-	control := []*lib.Stack[int32]{nil, {}, {}, {}}
+	control := []*lib.ArrayStack[int32]{nil, {}, {}, {}}
 	test := NewThreeInOne[int32]()
 
 	for i := 0; i+6 <= len(data); i += 6 {

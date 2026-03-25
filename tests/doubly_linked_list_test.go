@@ -3,10 +3,12 @@ package lib
 import (
 	"reflect"
 	"testing"
+
+	"github.com/NoamBechhofer/CTCI-Go/lib"
 )
 
 func TestDoublyLinkedListFromSlice_Empty(t *testing.T) {
-	list := DoublyLinkedListFromSlice([]int(nil))
+	list := lib.DoublyLinkedListFromSlice([]int(nil))
 
 	if list.Head != nil {
 		t.Fatalf("expected nil head, got %#v", list.Head)
@@ -23,7 +25,7 @@ func TestDoublyLinkedListFromSlice_Empty(t *testing.T) {
 
 func TestDoublyLinkedListFromSlice_Single(t *testing.T) {
 	input := []int{42}
-	list := DoublyLinkedListFromSlice(input)
+	list := lib.DoublyLinkedListFromSlice(input)
 
 	if list.Head == nil {
 		t.Fatal("expected non-nil head")
@@ -52,7 +54,7 @@ func TestDoublyLinkedListFromSlice_Single(t *testing.T) {
 
 func TestDoublyLinkedListFromSlice_Multiple_ForwardAndBackwardLinks(t *testing.T) {
 	input := []int{10, 20, 30, 40}
-	list := DoublyLinkedListFromSlice(input)
+	list := lib.DoublyLinkedListFromSlice(input)
 
 	if list.Head == nil {
 		t.Fatal("expected non-nil head")
@@ -62,7 +64,7 @@ func TestDoublyLinkedListFromSlice_Multiple_ForwardAndBackwardLinks(t *testing.T
 	}
 
 	forward := []int{}
-	var prev *DoublyLinkedListNode[int]
+	var prev *lib.DoublyLinkedListNode[int]
 	for curr := list.Head; curr != nil; curr = curr.Next {
 		if curr.Prev != prev {
 			t.Fatalf("expected prev pointer %#v, got %#v", prev, curr.Prev)
@@ -76,7 +78,7 @@ func TestDoublyLinkedListFromSlice_Multiple_ForwardAndBackwardLinks(t *testing.T
 	}
 
 	backward := []int{}
-	var next *DoublyLinkedListNode[int]
+	var next *lib.DoublyLinkedListNode[int]
 	for curr := list.Tail; curr != nil; curr = curr.Prev {
 		if curr.Next != next {
 			t.Fatalf("expected next pointer %#v, got %#v", next, curr.Next)
@@ -98,7 +100,7 @@ func TestDoublyLinkedListFromSlice_Multiple_ForwardAndBackwardLinks(t *testing.T
 
 func TestDoublyLinkedListToSlice_IndependenceFromInputSlice(t *testing.T) {
 	input := []string{"a", "b", "c"}
-	list := DoublyLinkedListFromSlice(input)
+	list := lib.DoublyLinkedListFromSlice(input)
 
 	input[0] = "x"
 	input[1] = "y"
@@ -113,7 +115,7 @@ func TestDoublyLinkedListToSlice_IndependenceFromInputSlice(t *testing.T) {
 }
 
 func TestDoublyLinkedListToSlice_NilReceiverHead(t *testing.T) {
-	list := DoublyLinkedList[int]{Head: nil, Tail: nil}
+	list := lib.DoublyLinkedList[int]{Head: nil, Tail: nil}
 
 	got := list.ToSlice()
 	if len(got) != 0 {
@@ -133,8 +135,8 @@ func TestLinkedLists_WithStructType(t *testing.T) {
 		{ID: 3, Name: "three"},
 	}
 
-	single := SinglyLinkedListFromSlice(input)
-	double := DoublyLinkedListFromSlice(input)
+	single := lib.SinglyLinkedListFromSlice(input)
+	double := lib.DoublyLinkedListFromSlice(input)
 
 	if got := single.ToSlice(); !reflect.DeepEqual(got, input) {
 		t.Fatalf("singly: expected %#v, got %#v", input, got)

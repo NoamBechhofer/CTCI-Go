@@ -31,6 +31,47 @@ type ThreeInOne[T any] struct {
 
 // #endregion
 
+// #region Stack interface wrappers
+
+type stackWrapper[T any] struct {
+	threeInOne *ThreeInOne[T]
+	stackId    StackId
+}
+
+func (w stackWrapper[T]) IsEmpty() bool {
+	return w.threeInOne.IsEmpty(w.stackId)
+}
+
+func (w stackWrapper[T]) Peek() (T, bool) {
+	return w.threeInOne.Peek(w.stackId)
+}
+
+func (w stackWrapper[T]) Pop() (T, bool) {
+	return w.threeInOne.Pop(w.stackId)
+}
+
+func (w stackWrapper[T]) Push(ele T) {
+	w.threeInOne.Push(w.stackId, ele)
+}
+
+func (w stackWrapper[T]) Size() int {
+	return w.threeInOne.Size(w.stackId)
+}
+
+func (stacks *ThreeInOne[T]) FirstStack() lib.Stack[T] {
+	return stackWrapper[T]{stacks, Stack1}
+}
+
+func (stacks *ThreeInOne[T]) SecondStack() lib.Stack[T] {
+	return stackWrapper[T]{stacks, Stack2}
+}
+
+func (stacks *ThreeInOne[T]) ThirdStack() lib.Stack[T] {
+	return stackWrapper[T]{stacks, Stack3}
+}
+
+//# endregion
+
 // #region internals
 
 func (stacks *ThreeInOne[T]) ensureInit() {

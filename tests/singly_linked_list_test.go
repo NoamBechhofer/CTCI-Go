@@ -3,10 +3,12 @@ package lib
 import (
 	"reflect"
 	"testing"
+
+	"github.com/NoamBechhofer/CTCI-Go/lib"
 )
 
 func TestSinglyLinkedListFromSlice_Empty(t *testing.T) {
-	list := SinglyLinkedListFromSlice([]int(nil))
+	list := lib.SinglyLinkedListFromSlice([]int(nil))
 
 	if list.Head != nil {
 		t.Fatalf("expected nil head, got %#v", list.Head)
@@ -20,7 +22,7 @@ func TestSinglyLinkedListFromSlice_Empty(t *testing.T) {
 
 func TestSinglyLinkedListFromSlice_Single(t *testing.T) {
 	input := []int{42}
-	list := SinglyLinkedListFromSlice(input)
+	list := lib.SinglyLinkedListFromSlice(input)
 
 	if list.Head == nil {
 		t.Fatal("expected non-nil head")
@@ -40,7 +42,7 @@ func TestSinglyLinkedListFromSlice_Single(t *testing.T) {
 
 func TestSinglyLinkedListFromSlice_Multiple(t *testing.T) {
 	input := []int{1, 2, 3, 4}
-	list := SinglyLinkedListFromSlice(input)
+	list := lib.SinglyLinkedListFromSlice(input)
 
 	if list.Head == nil {
 		t.Fatal("expected non-nil head")
@@ -63,7 +65,7 @@ func TestSinglyLinkedListFromSlice_Multiple(t *testing.T) {
 
 func TestSinglyLinkedListToSlice_IndependenceFromInputSlice(t *testing.T) {
 	input := []int{1, 2, 3}
-	list := SinglyLinkedListFromSlice(input)
+	list := lib.SinglyLinkedListFromSlice(input)
 
 	input[0] = 99
 	input[1] = 88
@@ -78,7 +80,7 @@ func TestSinglyLinkedListToSlice_IndependenceFromInputSlice(t *testing.T) {
 }
 
 func TestSinglyLinkedListToSlice_NilReceiverHead(t *testing.T) {
-	list := SinglyLinkedList[int]{Head: nil}
+	list := lib.SinglyLinkedList[int]{Head: nil}
 
 	got := list.ToSlice()
 	if len(got) != 0 {
