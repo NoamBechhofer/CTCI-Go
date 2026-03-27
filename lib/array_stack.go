@@ -8,6 +8,25 @@ type ArrayStack[T any] struct {
 	slice []T
 }
 
+func ArrayStackFromSlice[T any](slice []T) *ArrayStack[T] {
+	var ret ArrayStack[T]
+
+	for _, ele := range slice {
+		ret.Push(ele)
+	}
+
+	return &ret
+}
+
+func (stack *ArrayStack[T]) ToSlice() []T {
+	stack.mu.RLock()
+	defer stack.mu.RUnlock()
+
+	destination := make([]T, len(stack.slice))
+	copy(destination, stack.slice)
+	return destination
+}
+
 func (stack *ArrayStack[T]) IsEmpty() bool {
 	stack.mu.RLock()
 	defer stack.mu.RUnlock()
