@@ -7,8 +7,8 @@ import (
 	"github.com/NoamBechhofer/CTCI-Go/testutils"
 )
 
-func TestArrayStack(t *testing.T) {
-	stack := lib.ArrayStack[int]{}
+func TestArrayQueue(t *testing.T) {
+	queue := lib.ArrayQueue[int]{}
 
-	testutils.StackFunctionality(t, &stack)
+	testutils.QueueFunctionality(t, &queue)
 }
