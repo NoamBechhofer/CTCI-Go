@@ -13,7 +13,7 @@ const (
 	CAT
 )
 
-func (spec Species) toString() string {
+func (spec Species) String() string {
 	switch spec {
 	case DOG:
 		return "dog"

@@ -17,7 +17,7 @@ func StringCompression(s string) string {
 			compressed = append(compressed, []rune(strconv.Itoa(runLen))...)
 		}
 	}
-	
+
 	for _, r := range s {
 		if r == curr {
 			runLen++

@@ -5,15 +5,14 @@ import (
 	"testing"
 )
 
-type TestCase struct {
-	str1     string
-	str2     string
-	expected bool
+type testCase struct {
+	str1 string
+	str2 string
+	want bool
 }
 
 func TestOneAway(t *testing.T) {
-
-	testCases := []TestCase{
+	testCases := []testCase{
 		{"", "", true}, {"", " ", true},
 		{"", "  ", false}, {"a", "a", true},
 		{"a", "ba", true}, {"ab", "a", true},
@@ -27,16 +26,14 @@ func TestOneAway(t *testing.T) {
 		{"pale", "bale", true}, {"pale", "bake", false},
 	}
 
-	for i, tc := range testCases {
-		fmt.Printf(
-			"Test %d: OneAway(\"%s\", \"%s\") = ", i+1, tc.str1, tc.str2)
-		result := OneAway(tc.str1, tc.str2)
-		fmt.Printf("%t ", result)
-		if result != tc.expected {
-			fmt.Printf("expected %t, failed", tc.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
-		}
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf("\"%s\", \"%s\"", tc.str1, tc.str2), func(t *testing.T) {
+			got := OneAway(tc.str1, tc.str2)
+			if got != tc.want {
+				t.Fatalf("wanted %t, got %t", tc.want, got)
+			} else {
+				t.Logf("%t ", got)
+			}
+		})
 	}
 }

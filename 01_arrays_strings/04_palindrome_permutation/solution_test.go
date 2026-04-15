@@ -1,17 +1,15 @@
 package palindromepermutation
 
 import (
-	"fmt"
 	"testing"
 )
 
 type TestCase struct {
-	input    string
-	expected bool
+	input string
+	want  bool
 }
 
 func TestPalindromePermutation(t *testing.T) {
-
 	testCases := []TestCase{{"", true},
 		{" ", true},
 		{"a ", true},
@@ -43,15 +41,14 @@ func TestPalindromePermutation(t *testing.T) {
 		{" a a b b c ", true},
 		{" a a d b b c ", false}}
 
-	for i, tc := range testCases {
-		fmt.Printf("Test %d: PalindromePermutation(\"%s\") = ", i+1, tc.input)
-		result := PalindromePermutation(tc.input)
-		fmt.Printf("%t ", result)
-		if !result == tc.expected {
-			fmt.Printf("expected \"%t\", failed", tc.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
-		}
+	for _, tc := range testCases {
+		t.Run(tc.input, func(t *testing.T) {
+			got := PalindromePermutation(tc.input)
+			if got != tc.want {
+				t.Fatalf("want %t, got %t", tc.want, got)
+			} else {
+				t.Logf("%t ", got)
+			}
+		})
 	}
 }

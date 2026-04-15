@@ -7,7 +7,6 @@ func ReturnKthToLast[T any](list *lib.TypedList[T], k int) T {
 	left := list.Front()
 
 	for i := 1; right.Next() != nil; i++ {
-
 		right = right.Next()
 		if i >= k {
 			left = left.Next()

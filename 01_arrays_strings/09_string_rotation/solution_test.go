@@ -6,9 +6,9 @@ import (
 )
 
 type TestCase struct {
-	str1     string
-	str2     string
-	expected bool
+	str1 string
+	str2 string
+	want bool
 }
 
 func TestStringRotation(t *testing.T) {
@@ -27,13 +27,13 @@ func TestStringRotation(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		result := StringRotation(testCase.str1, testCase.str2)
-		fmt.Printf("IsUnique(%q, %q) = %t, ", testCase.str1, testCase.str2, result)
-		if !result == testCase.expected {
-			fmt.Printf("expected %t, failed\n", testCase.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
-		}
+		t.Run(fmt.Sprintf("%q, %q", testCase.str1, testCase.str2), func(t *testing.T) {
+			got := StringRotation(testCase.str1, testCase.str2)
+			if got != testCase.want {
+				t.Fatalf("wanted %t, got %t", testCase.want, got)
+			} else {
+				t.Logf("got %t", got)
+			}
+		})
 	}
 }

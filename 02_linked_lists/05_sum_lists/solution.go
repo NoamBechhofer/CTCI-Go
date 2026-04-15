@@ -63,11 +63,8 @@ func SumListsForward[T constraints.Unsigned](a lib.SinglyLinkedList[T], b lib.Si
 	return lib.SinglyLinkedList[T]{Head: head}
 }
 
+// invariant: len(a) == len(b)
 func sumListsForwardDriver[T constraints.Unsigned](a *lib.SinglyLinkedListNode[T], b *lib.SinglyLinkedListNode[T]) (*lib.SinglyLinkedListNode[T], T) {
-	if (a == nil) != (b == nil) {
-		panic("invariant broken: a and b should be same length")
-	}
-
 	if (a == nil) && (b == nil) {
 		return nil, 0
 	}

@@ -1,7 +1,7 @@
 package zeromatrix
 
 func ZeroMatrix(matrix [][]int32) {
-	if len(matrix) == 0 || len(matrix) == 1 && len(matrix[0]) <= 1 {
+	if len(matrix) == 0 || (len(matrix) == 1 && len(matrix[0]) <= 1) {
 		return
 	}
 
@@ -30,7 +30,7 @@ func ZeroMatrix(matrix [][]int32) {
 		}
 	}
 
-	// zero out any necessary rows
+	// zero out any necessary rows and columns
 	for row := range numRows {
 		if matrix[row][0] == 0 {
 			for col := range matrix[row] {
@@ -38,8 +38,6 @@ func ZeroMatrix(matrix [][]int32) {
 			}
 		}
 	}
-
-	// zero out any necessary columns
 	for col := range numCols {
 		if matrix[0][col] == 0 {
 			for row := range numRows {

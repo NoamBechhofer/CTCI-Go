@@ -5,13 +5,13 @@ import (
 	"testing"
 )
 
-type TestCase struct {
-	str      string
-	expected bool
+type testCase struct {
+	str  string
+	want bool
 }
 
 func TestIsUnique(t *testing.T) {
-	testCases := [...]TestCase{
+	testCases := []testCase{
 		{"", true},
 		{"a", true},
 		{"abcde", true},
@@ -24,25 +24,24 @@ func TestIsUnique(t *testing.T) {
 		{"😊😍🤷‍♂️😉", true},
 	}
 
-	for _, testCase := range testCases {
-		result := IsUnique(testCase.str)
-		fmt.Printf("IsUnique(%s) = %t, ", testCase.str, result)
-		if !result == testCase.expected {
-			fmt.Printf("expected %t, failed\n", testCase.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
-		}
+	solutions := []struct {
+		f    func(str string) bool
+		name string
+	}{
+		{name: "IsUnique", f: IsUnique},
+		{name: "IsUniqueNoAdditionalDataStructures", f: func(str string) bool { return IsUniqueNoAdditionalDataStructures([]rune(str)) }},
 	}
 
-	for _, testCase := range testCases {
-		result := IsUniqueNoAdditionalDataStructures([]rune(testCase.str))
-		fmt.Printf("IsUniqueNoAdditionalDataStructures(%s) = %t, ", testCase.str, result)
-		if !result == testCase.expected {
-			fmt.Printf("expected %t, failed\n", testCase.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
+	for _, solution := range solutions {
+		for _, testCase := range testCases {
+			t.Run(fmt.Sprintf("%s(%s)", solution.name, testCase.str), func(t *testing.T) {
+				got := solution.f(testCase.str)
+				if got != testCase.want {
+					t.Fatalf("expected %t, got %t", testCase.want, got)
+				} else {
+					t.Logf("got %t", got)
+				}
+			})
 		}
 	}
 }

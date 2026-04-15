@@ -59,7 +59,7 @@ func testDequeue(shelter *AnimalShelter, wantName string, wantSpecies Species) f
 			t.Fatalf("wanted %s, got %s", wantName, got.Name)
 		}
 		if wantSpecies != got.Species {
-			t.Fatalf("wanted %s, got %s", wantSpecies.toString(), got.Species.toString())
+			t.Fatalf("wanted %s, got %s", wantSpecies.String(), got.Species.String())
 		}
 	}
 }
@@ -78,7 +78,7 @@ func testDequeueCat(shelter *AnimalShelter, wantName string) func(t *testing.T) 
 			t.Fatalf("wanted %s, got %s", wantName, got.Name)
 		}
 		if wantSpecies != got.Species {
-			t.Fatalf("wanted %s, got %s", wantSpecies.toString(), got.Species.toString())
+			t.Fatalf("wanted %s, got %s", wantSpecies.String(), got.Species.String())
 		}
 	}
 }
@@ -97,7 +97,7 @@ func testDequeueDog(shelter *AnimalShelter, wantName string) func(t *testing.T) 
 			t.Fatalf("wanted %s, got %s", wantName, got.Name)
 		}
 		if wantSpecies != got.Species {
-			t.Fatalf("wanted %s, got %s", wantSpecies.toString(), got.Species.toString())
+			t.Fatalf("wanted %s, got %s", wantSpecies.String(), got.Species.String())
 		}
 	}
 }

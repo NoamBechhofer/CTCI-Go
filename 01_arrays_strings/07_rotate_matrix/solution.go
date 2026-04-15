@@ -6,7 +6,6 @@ func rotateLayer(matrix [][]int32, layer int) {
 	last := N - 1 - layer
 	steps := last - first
 
-	// since 1.25 we are allowed to range an integer
 	for i := range steps {
 		top := &matrix[first][first+i]
 		right := &matrix[first+i][last]

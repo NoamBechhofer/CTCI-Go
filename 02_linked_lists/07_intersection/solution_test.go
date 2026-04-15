@@ -14,7 +14,7 @@ type TestCase struct {
 	intersectionLen int
 }
 
-func (tc *TestCase) toString() string {
+func (tc *TestCase) String() string {
 	aUniqueVals := max(len(tc.aVals)-int(tc.intersectionLen), 0)
 	bUniqueVals := max(len(tc.bVals)-int(tc.intersectionLen), 0)
 
@@ -118,10 +118,10 @@ func TestIntersection(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		testName := fmt.Sprintf("Intersection(%v, %v, %d)", tc.aVals, tc.bVals, tc.intersectionLen)
+		testName := fmt.Sprintf("%v, %v, %d", tc.aVals, tc.bVals, tc.intersectionLen)
 		testFunc := func(t *testing.T) {
-			t.Logf("\n%s\n", tc.toString())
-			a, b, expected := tc.buildLists()
+			t.Logf("\n%s\n", tc.String())
+			a, b, want := tc.buildLists()
 
 			got := Intersection(a, b)
 
@@ -132,15 +132,15 @@ func TestIntersection(t *testing.T) {
 				gotVal = "nil"
 			}
 
-			if got != expected {
+			if got != want {
 				var expectedVal string
-				if expected != nil {
-					expectedVal = lib.SignedToString(expected.Val)
+				if want != nil {
+					expectedVal = lib.SignedToString(want.Val)
 				} else {
 					expectedVal = "nil"
 				}
 
-				t.Fatalf("expected %p (%s), got %p (%s)", expected, expectedVal, got, gotVal)
+				t.Fatalf("wanted %p (%s), got %p (%s)", want, expectedVal, got, gotVal)
 			} else {
 				t.Logf("got %p (%s)", got, gotVal)
 			}

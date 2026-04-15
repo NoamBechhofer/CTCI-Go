@@ -8,90 +8,87 @@ import (
 )
 
 type TestCase struct {
-	str      string
-	expected bool
+	str  string
+	want bool
 }
 
 func TestPalindrome(t *testing.T) {
 
 	testCases := []TestCase{
 		// empty / minimal
-		{str: "", expected: true},
-		{str: "a", expected: true},
+		{str: "", want: true},
+		{str: "a", want: true},
 
 		// length 2
-		{str: "aa", expected: true},
-		{str: "ab", expected: false},
+		{str: "aa", want: true},
+		{str: "ab", want: false},
 
 		// length 3
-		{str: "aaa", expected: true},
-		{str: "aab", expected: false},
-		{str: "aba", expected: true},
-		{str: "abb", expected: false},
-		{str: "abc", expected: false},
+		{str: "aaa", want: true},
+		{str: "aab", want: false},
+		{str: "aba", want: true},
+		{str: "abb", want: false},
+		{str: "abc", want: false},
 
 		// length 4
-		{str: "abba", expected: true},
-		{str: "aaaa", expected: true},
-		{str: "abca", expected: false},
-		{str: "abab", expected: false},
-		{str: "abcc", expected: false},
+		{str: "abba", want: true},
+		{str: "aaaa", want: true},
+		{str: "abca", want: false},
+		{str: "abab", want: false},
+		{str: "abcc", want: false},
 
 		// length 5
-		{str: "abcba", expected: true},
-		{str: "aaaaa", expected: true},
-		{str: "ababa", expected: true},
-		{str: "abcaa", expected: false},
-		{str: "abcca", expected: false},
+		{str: "abcba", want: true},
+		{str: "aaaaa", want: true},
+		{str: "ababa", want: true},
+		{str: "abcaa", want: false},
+		{str: "abcca", want: false},
 
 		// longer palindromes
-		{str: "racecar", expected: true},
-		{str: "level", expected: true},
-		{str: "rotator", expected: true},
-		{str: "madam", expected: true},
+		{str: "racecar", want: true},
+		{str: "level", want: true},
+		{str: "rotator", want: true},
+		{str: "madam", want: true},
 
 		// longer non-palindromes
-		{str: "palindrome", expected: false},
-		{str: "abcdefg", expected: false},
-		{str: "racecars", expected: false},
+		{str: "palindrome", want: false},
+		{str: "abcdefg", want: false},
+		{str: "racecars", want: false},
 
 		// repeated patterns
-		{str: "aaaaaa", expected: true},
-		{str: "aaaaba", expected: false},
-		{str: "baaaab", expected: true},
+		{str: "aaaaaa", want: true},
+		{str: "aaaaba", want: false},
+		{str: "baaaab", want: true},
 
 		// mixed characters
-		{str: "a1a", expected: true},
-		{str: "1a1", expected: true},
-		{str: "a1b", expected: false},
-		{str: "1221", expected: true},
-		{str: "1231", expected: false},
+		{str: "a1a", want: true},
+		{str: "1a1", want: true},
+		{str: "a1b", want: false},
+		{str: "1221", want: true},
+		{str: "1231", want: false},
 	}
 
-	for _, tc := range testCases {
-		testName := fmt.Sprintf("Palindrome(%s)", string(tc.str))
-		testFunc := func(t *testing.T) {
-			list := lib.SinglyLinkedListFromSlice([]rune(tc.str))
-			got := Palindrome(list)
-			if got != tc.expected {
-				t.Fatalf("expect %t, got %t", tc.expected, got)
-			} else {
-				t.Logf("got %t", got)
-			}
-		}
-		t.Run(testName, testFunc)
+	solutions := []struct {
+		name string
+		f    func(list lib.SinglyLinkedList[rune]) bool
+	}{
+		{name: "Palindrome", f: Palindrome[rune]},
+		{name: "PalindromeRecursive", f: PalindromeRecursive[rune]},
 	}
-	for _, tc := range testCases {
-		testName := fmt.Sprintf("PalindromeRecursive(%s)", string(tc.str))
-		testFunc := func(t *testing.T) {
-			list := lib.SinglyLinkedListFromSlice([]rune(tc.str))
-			got := PalindromeRecursive(list)
-			if got != tc.expected {
-				t.Fatalf("expect %t, got %t", tc.expected, got)
-			} else {
-				t.Logf("got %t", got)
+
+	for _, solution := range solutions {
+		for _, tc := range testCases {
+			testName := fmt.Sprintf("%s(%s)", solution.name, string(tc.str))
+			testFunc := func(t *testing.T) {
+				list := lib.SinglyLinkedListFromSlice([]rune(tc.str))
+				got := solution.f(list)
+				if got != tc.want {
+					t.Fatalf("want %t, got %t", tc.want, got)
+				} else {
+					t.Logf("got %t", got)
+				}
 			}
+			t.Run(testName, testFunc)
 		}
-		t.Run(testName, testFunc)
 	}
 }

@@ -1,17 +1,15 @@
 package stringcompression
 
 import (
-	"fmt"
 	"testing"
 )
 
 type TestCase struct {
-	str      string
-	expected string
+	str  string
+	want string
 }
 
 func TestStringCompression(t *testing.T) {
-
 	testCases := []TestCase{
 		{"a", "a"},
 		{"aa", "aa"},
@@ -58,17 +56,14 @@ func TestStringCompression(t *testing.T) {
 			"a1024b2"},
 	}
 
-	for i, tc := range testCases {
-		result := StringCompression(tc.str)
-		fmt.Printf("Test %d: StringCompression(\"%s\") = \"%s\", ",
-			i+1,
-			tc.str,
-			result)
-		if result != tc.expected {
-			fmt.Printf("expected %s, failed", tc.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
-		}
+	for _, tc := range testCases {
+		t.Run(tc.str, func(t *testing.T) {
+			got := StringCompression(tc.str)
+			if got != tc.want {
+				t.Fatalf("wanted %s, got %s", tc.want, got)
+			} else {
+				t.Log(got)
+			}
+		})
 	}
 }

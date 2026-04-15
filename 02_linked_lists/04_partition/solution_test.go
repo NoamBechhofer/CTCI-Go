@@ -17,7 +17,7 @@ func isValidPartition(list []int32, partitionValue int32) bool {
 	}
 findPartition:
 	for i := range list {
-		for j := 0; j < i; j++ {
+		for j := range i {
 			if list[j] >= partitionValue {
 				continue findPartition
 			}
@@ -43,7 +43,7 @@ func TestPartition(t *testing.T) {
 
 	for _, tc := range testCases {
 		for _, partitionValue := range tc.list {
-			testName := fmt.Sprintf("Partition(%v, %d)", tc.list, partitionValue)
+			testName := fmt.Sprintf("%v, %d", tc.list, partitionValue)
 			testFunc := func(t *testing.T) {
 				list := lib.SinglyLinkedListFromSlice(tc.list)
 				Partition(&list, partitionValue)

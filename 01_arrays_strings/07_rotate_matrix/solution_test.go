@@ -7,8 +7,8 @@ import (
 )
 
 type TestCase struct {
-	matrix   [][]int32
-	expected [][]int32
+	matrix [][]int32
+	want   [][]int32
 }
 
 func matricesEqual(m1 [][]int32, m2 [][]int32) bool {
@@ -68,19 +68,14 @@ func TestRotateMatrix(t *testing.T) {
 		},
 	}
 
-	for i, tc := range testCases {
-		fmt.Printf("Test %d: RotateMatrix(\"%v\")",
-			i+1,
-			tc.matrix,
-		)
-		RotateMatrix(tc.matrix)
-		fmt.Printf(" = \"%v\", ", tc.matrix)
-
-		if !matricesEqual(tc.matrix, tc.expected) {
-			fmt.Printf("expected %v, failed\n", tc.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
-		}
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf("%v", tc.matrix), func(t *testing.T) {
+			RotateMatrix(tc.matrix)
+			if !matricesEqual(tc.matrix, tc.want) {
+				t.Fatalf("wanted %v, got %v", tc.want, tc.matrix)
+			} else {
+				t.Logf("%v", tc.matrix)
+			}
+		})
 	}
 }

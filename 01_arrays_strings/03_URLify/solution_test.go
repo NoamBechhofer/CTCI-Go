@@ -6,15 +6,14 @@ import (
 	"testing"
 )
 
-type TestCase struct {
-	input       []rune
+type testCase struct {
+	input      []rune
 	trueLength int
-	expected    []rune
+	want       []rune
 }
 
 func TestURLify(t *testing.T) {
-
-	testCases := []TestCase{
+	testCases := []testCase{
 		{[]rune(""), 0, []rune("")},
 		{[]rune("a"), 1, []rune("a")},
 		{[]rune("   "), 1, []rune("%20")},
@@ -23,19 +22,14 @@ func TestURLify(t *testing.T) {
 		{[]rune("trailing spaces           "), 18, []rune("trailing%20spaces%20%20%20")},
 	}
 
-	for i, tc := range testCases {
-		fmt.Printf("Test %d: URLify(%q, %d) = ",
-			i+1,
-			tc.input,
-			tc.trueLength,
-		)
-		URLify(tc.input, tc.trueLength)
-		fmt.Printf("%q ", tc.input)
-		if !slices.Equal(tc.input, tc.expected) {
-			fmt.Printf("expected %q, failed\n", tc.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
-		}
+	for _, tc := range testCases {
+		t.Run(fmt.Sprintf("%q, true length %d", tc.input, tc.trueLength), func(t *testing.T) {
+			URLify(tc.input, tc.trueLength)
+			if !slices.Equal(tc.input, tc.want) {
+				t.Fatalf("expected %q, got %q\n", tc.want, tc.input)
+			} else {
+				t.Logf("got %q", tc.input)
+			}
+		})
 	}
 }

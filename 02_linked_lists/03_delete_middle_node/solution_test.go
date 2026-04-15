@@ -11,25 +11,25 @@ import (
 type TestCase struct {
 	list      []int32
 	nodeIndex int
-	expected  []int32
+	want      []int32
 }
 
 func TestDeleteMiddleNode(t *testing.T) {
 	testCases := []TestCase{
-		{list: []int32{1, 2, 3}, nodeIndex: 1, expected: []int32{1, 3}},
-		{list: []int32{1, 2, 3, 4}, nodeIndex: 1, expected: []int32{1, 3, 4}},
-		{list: []int32{1, 2, 3, 4}, nodeIndex: 2, expected: []int32{1, 2, 4}},
-		{list: []int32{1, 2, 3, 4, 5}, nodeIndex: 1, expected: []int32{1, 3, 4, 5}},
-		{list: []int32{1, 2, 3, 4, 5}, nodeIndex: 2, expected: []int32{1, 2, 4, 5}},
-		{list: []int32{1, 2, 3, 4, 5}, nodeIndex: 3, expected: []int32{1, 2, 3, 5}},
-		{list: []int32{1, 2, 3, 4, 5, 6}, nodeIndex: 1, expected: []int32{1, 3, 4, 5, 6}},
-		{list: []int32{1, 2, 3, 4, 5, 6}, nodeIndex: 2, expected: []int32{1, 2, 4, 5, 6}},
-		{list: []int32{1, 2, 3, 4, 5, 6}, nodeIndex: 3, expected: []int32{1, 2, 3, 5, 6}},
-		{list: []int32{1, 2, 3, 4, 5, 6}, nodeIndex: 4, expected: []int32{1, 2, 3, 4, 6}},
+		{list: []int32{1, 2, 3}, nodeIndex: 1, want: []int32{1, 3}},
+		{list: []int32{1, 2, 3, 4}, nodeIndex: 1, want: []int32{1, 3, 4}},
+		{list: []int32{1, 2, 3, 4}, nodeIndex: 2, want: []int32{1, 2, 4}},
+		{list: []int32{1, 2, 3, 4, 5}, nodeIndex: 1, want: []int32{1, 3, 4, 5}},
+		{list: []int32{1, 2, 3, 4, 5}, nodeIndex: 2, want: []int32{1, 2, 4, 5}},
+		{list: []int32{1, 2, 3, 4, 5}, nodeIndex: 3, want: []int32{1, 2, 3, 5}},
+		{list: []int32{1, 2, 3, 4, 5, 6}, nodeIndex: 1, want: []int32{1, 3, 4, 5, 6}},
+		{list: []int32{1, 2, 3, 4, 5, 6}, nodeIndex: 2, want: []int32{1, 2, 4, 5, 6}},
+		{list: []int32{1, 2, 3, 4, 5, 6}, nodeIndex: 3, want: []int32{1, 2, 3, 5, 6}},
+		{list: []int32{1, 2, 3, 4, 5, 6}, nodeIndex: 4, want: []int32{1, 2, 3, 4, 6}},
 	}
 
 	for _, tc := range testCases {
-		testName := fmt.Sprintf("DeleteMiddleNode(%v, %d)", tc.list, tc.nodeIndex)
+		testName := fmt.Sprintf("%v, %d", tc.list, tc.nodeIndex)
 		testFunc := func(t *testing.T) {
 			list := lib.SinglyLinkedListFromSlice(tc.list)
 			curr := list.Head
@@ -38,8 +38,8 @@ func TestDeleteMiddleNode(t *testing.T) {
 			}
 			DeleteMiddleNode(curr)
 			got := list.ToSlice()
-			if !slices.Equal(got, tc.expected) {
-				t.Fatalf("expected %v, got %v", tc.expected, got)
+			if !slices.Equal(got, tc.want) {
+				t.Fatalf("wanted %v, got %v", tc.want, got)
 			} else {
 				t.Logf("got %v", got)
 			}

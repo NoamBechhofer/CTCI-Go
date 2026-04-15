@@ -14,7 +14,7 @@ type TestCase struct {
 	b uint32
 }
 
-// given nonnegative integer n, return slices contianing the digits: the first
+// given nonnegative integer n, return slices containing the digits: the first
 // return contains the digits in forward order, the second contains them in
 // reverese order. e.g. createSlices(1234) = ([1, 2, 3, 4], [4, 3, 2, 1])
 func createSlices(n uint32) ([]uint32, []uint32) {
@@ -57,11 +57,10 @@ func TestSumLists(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-
 		aForward, aReverse := createSlices(tc.a)
 		bForward, bReverse := createSlices(tc.b)
-		expected := tc.a + tc.b
-		expectedForward, expectedReverse := createSlices(expected)
+		want := tc.a + tc.b
+		expectedForward, expectedReverse := createSlices(want)
 
 		t.Run(fmt.Sprintf("SumListsReverse(%d, %d)", tc.a, tc.b), func(t *testing.T) {
 			aList := lib.SinglyLinkedListFromSlice(aReverse)
@@ -69,7 +68,7 @@ func TestSumLists(t *testing.T) {
 			got := SumListsReverse(aList, bList)
 			gotSlice := got.ToSlice()
 			if !slices.Equal(gotSlice, expectedReverse) {
-				t.Fatalf("expected %d, got %v", expected, gotSlice)
+				t.Fatalf("wanted %d, got %v", want, gotSlice)
 			} else {
 				t.Logf("got %v", gotSlice)
 			}
@@ -81,7 +80,7 @@ func TestSumLists(t *testing.T) {
 			got := SumListsForward(aList, bList)
 			gotSlice := got.ToSlice()
 			if !slices.Equal(gotSlice, expectedForward) {
-				t.Fatalf("expected %d, got %v", expected, gotSlice)
+				t.Fatalf("wanted %d, got %v", want, gotSlice)
 			} else {
 				t.Logf("got %v", gotSlice)
 			}

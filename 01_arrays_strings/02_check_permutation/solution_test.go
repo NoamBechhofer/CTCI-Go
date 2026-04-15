@@ -5,15 +5,15 @@ import (
 	"testing"
 )
 
-type TestCase struct {
-	s1       string
-	s2       string
-	expected bool
+type testCase struct {
+	s1   string
+	s2   string
+	want bool
 }
 
 func TestCheckPermutation(t *testing.T) {
 
-	test_cases := []TestCase{{"", "", true},
+	test_cases := []testCase{{"", "", true},
 		{"a", "a", true},
 		{"a", "b", false},
 		{"abc", "bac", true},
@@ -35,13 +35,14 @@ func TestCheckPermutation(t *testing.T) {
 		{"😹emojicats😺😻😸😼😽🙀", "😽😽tim😸oa🙀sj😹😼😻ce", false}}
 
 	for _, tc := range test_cases {
-		result := CheckPermutation(tc.s1, tc.s2)
-		fmt.Printf("CheckPermutation(%s, %s) = %t, ", tc.s1, tc.s2, result)
-		if !result == tc.expected {
-			fmt.Printf("expected %t, failed\n", tc.expected)
-			t.Fail()
-		} else {
-			fmt.Printf("passed\n")
-		}
+		t.Run(fmt.Sprintf("\"%s\", \"%s\"", tc.s1, tc.s2), func(t *testing.T) {
+			got := CheckPermutation(tc.s1, tc.s2)
+			fmt.Printf("CheckPermutation(%s, %s) = %t, ", tc.s1, tc.s2, got)
+			if got != tc.want {
+				t.Fatalf("wanted %t, got %t", tc.want, got)
+			} else {
+				t.Logf("got %t", got)
+			}
+		})
 	}
 }

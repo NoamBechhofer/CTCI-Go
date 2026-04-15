@@ -57,9 +57,9 @@ func TestLoopDetection(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		testName := fmt.Sprintf("LoopDetection(%v, %d)", tc.list, tc.loopIndex)
+		testName := fmt.Sprintf("%v, %d", tc.list, tc.loopIndex)
 		testFunc := func(t *testing.T) {
-			list, expected := tc.generateList()
+			list, want := tc.generateList()
 
 			got := LoopDetection(list)
 			var gotVal string
@@ -69,15 +69,15 @@ func TestLoopDetection(t *testing.T) {
 				gotVal = "nil"
 			}
 
-			if expected != got {
+			if want != got {
 				var expectedVal string
-				if expected != nil {
-					expectedVal = lib.SignedToString(expected.Val)
+				if want != nil {
+					expectedVal = lib.SignedToString(want.Val)
 				} else {
 					expectedVal = "nil"
 				}
 
-				t.Fatalf("expected %p (%s), got %p (%s)", expected, expectedVal, got, gotVal)
+				t.Fatalf("wanted %p (%s), got %p (%s)", want, expectedVal, got, gotVal)
 			} else {
 				t.Logf("got %p (%s)", got, gotVal)
 			}

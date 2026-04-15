@@ -7,7 +7,7 @@ func Palindrome[T comparable](list lib.SinglyLinkedList[T]) bool {
 		return true
 	}
 
-	stack := []T{}
+	stack := lib.ArrayStack[T]{}
 
 	slow := list.Head
 	fast := list.Head
@@ -18,14 +18,13 @@ func Palindrome[T comparable](list lib.SinglyLinkedList[T]) bool {
 			slow = slow.Next
 			break
 		}
-		stack = append(stack, slow.Val)
+		stack.Push(slow.Val)
 		fast = fast.Next.Next
 		slow = slow.Next
 	}
 
-	var pop T
 	for ; slow != nil; slow = slow.Next {
-		pop, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		pop, _ := stack.Pop()
 		if slow.Val != pop {
 			return false
 		}
