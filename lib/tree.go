@@ -5,6 +5,8 @@ import "cmp"
 type BinaryTreeNode[T any] struct {
 	Val         T
 	Left, Right *BinaryTreeNode[T]
+	// Optional. Code that relies on upward traversal must keep Parent in sync.
+	Parent *BinaryTreeNode[T]
 }
 
 func (bt *BinaryTreeNode[T]) Height() int {
